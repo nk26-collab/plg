@@ -1,1 +1,437 @@
-<!DOCTYPE html><html lang='ja'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>しんじゅの伝説DX</title><style>body{margin:0;background:#8ed1ff;font-family:sans-serif;text-align:center}#g{max-width:950px;margin:auto;background:#fff;min-height:100vh;padding:12px}#scene{font-size:90px}#st{background:#fff7c0;padding:8px}#log{height:260px;overflow:auto;text-align:left;border:1px solid #999;padding:8px}button{width:260px;min-height:70px;font-size:22px;margin:6px}</style></head><body><div id=g><h1>🌟しんじゅの伝説DX🌟</h1><div id=scene>👧</div><div id=st></div><div id=btn></div><div id=log></div></div><script>const loge=document.getElementById('log');let d=JSON.parse(localStorage.getItem('shinjuDX')||'null');let p=d?.p||{lv:1,hp:80,max:80,g:0,pot:3};let chapter=d?.chapter||1;let party=d?.party||['🐱ニャルン'];function save(){localStorage.setItem('shinjuDX',JSON.stringify({p,chapter,party}))}function log(t){loge.innerHTML+=t+'<br>';loge.scrollTop=99999;save()}function ui(){st.innerHTML='❤️'+p.hp+'/'+p.max+' ⭐'+p.lv+' 💰'+p.g+' 🧪'+p.pot+' 👥'+party.join(' ')}function map(){ui();scene.textContent='🗺️';btn.innerHTML='<button onclick=forest()>🌲森</button><button onclick=mountain()>⛰️山</button><button onclick=cave()>🌊洞くつ</button><button onclick=shop()>🏪店</button>'}function battle(icon,name,h,a,r,join,next){scene.textContent=icon;log('⚔️ '+name+' が現れた！');btn.innerHTML='<button onclick=atk()>⚔️攻撃</button>';window.atk=()=>{let dmg=party.length*8+p.lv*3;log('👥 仲間たちの攻撃！ '+dmg+'ダメージ');h-=dmg;if(h<=0){log('🎉 '+name+' をたおした！');p.g+=r;if(join&&!party.includes(join)){party.push(join);log('🎊 '+join+' が仲間になった！')}next();return}p.hp-=a;log(name+' の攻撃！ -'+a);ui();}};ui()}function forest(){battle('🐺','ウルファ',35,6,20,'🐶ワンコロ',()=>{chapter=2;map()})}function mountain(){battle('🦅','ホークン',55,9,35,'🦊フォクシー',()=>{chapter=3;map()})}function cave(){battle('🦀','クラブン',70,10,50,'🐧ペンタ',()=>{chapter=4;map()})}function shop(){scene.textContent='🏪';log('🛒お店へようこそ');}map();log('📖冒険スタート！');</script></body></html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>しんじゅの伝説</title>
+
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+background:#8fd3ff;
+text-align:center;
+}
+
+#game{
+max-width:900px;
+margin:auto;
+background:white;
+min-height:100vh;
+padding:15px;
+}
+
+#scene{
+font-size:90px;
+}
+
+#status{
+background:#fff8c4;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+#log{
+height:260px;
+overflow-y:auto;
+text-align:left;
+border:1px solid #999;
+padding:10px;
+background:#fafafa;
+}
+
+button{
+width:260px;
+min-height:70px;
+font-size:22px;
+margin:6px;
+border-radius:12px;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div id="game">
+
+<h1>🌟しんじゅの伝説🌟</h1>
+
+<div id="scene">👧</div>
+
+<div id="status"></div>
+
+<div id="buttons"></div>
+
+<div id="log"></div>
+
+</div>
+
+<script>
+
+const hero = {
+level:1,
+hp:100,
+maxHp:100,
+gold:0,
+potions:3
+};
+
+let party = [
+{
+name:"🐱ニャルン",
+atk:8
+}
+];
+
+function saveGame(){
+
+localStorage.setItem(
+"shinju_save",
+JSON.stringify({
+hero,
+party
+})
+);
+
+log("💾 セーブした！");
+}
+
+function loadGame(){
+
+const data =
+localStorage.getItem(
+"shinju_save"
+);
+
+if(!data) return;
+
+const save =
+JSON.parse(data);
+
+Object.assign(
+hero,
+save.hero
+);
+
+party = save.party;
+
+log("📂 ロードした！");
+}
+
+function log(text){
+
+const logBox =
+document.getElementById("log");
+
+logBox.innerHTML +=
+text + "<br>";
+
+logBox.scrollTop =
+logBox.scrollHeight;
+}
+
+function update(){
+
+document.getElementById(
+"status"
+).innerHTML =
+
+`
+❤️ ${hero.hp}/${hero.maxHp}
+⭐ Lv.${hero.level}
+💰 ${hero.gold}
+🧪 ${hero.potions}
+
+<br><br>
+
+👥 ${party.map(
+m=>m.name
+).join(" ")}
+`;
+}
+
+function map(){
+
+update();
+
+scene.innerHTML="🗺️";
+
+buttons.innerHTML=`
+
+<button onclick="forest()">
+🌲 森
+</button>
+
+<button onclick="mountain()">
+⛰️ 山
+</button>
+
+<button onclick="shop()">
+🏪 ショップ
+</button>
+
+<button onclick="rest()">
+🏡 休む
+</button>
+
+<button onclick="saveGame()">
+💾 セーブ
+</button>
+
+`;
+}
+
+function rest(){
+
+hero.hp =
+hero.maxHp;
+
+log("💤 全回復した");
+
+update();
+}
+
+function battle(enemy){
+
+scene.innerHTML =
+enemy.icon;
+
+log(
+"⚔️ "+
+enemy.name+
+" が現れた！"
+);
+
+buttons.innerHTML=`
+
+<button onclick="attack()">
+⚔️ 攻撃
+</button>
+
+<button onclick="heal()">
+🧪 回復
+</button>
+
+`;
+
+window.heal=function(){
+
+if(hero.potions<=0){
+
+log("❌ やくそうがない");
+return;
+}
+
+hero.potions--;
+
+hero.hp =
+Math.min(
+hero.maxHp,
+hero.hp+40
+);
+
+update();
+
+log("🧪 回復した");
+};
+
+window.attack=function(){
+
+let totalAtk = 0;
+
+party.forEach(mon=>{
+
+log(
+mon.name+
+" の攻撃！"
+);
+
+totalAtk +=
+mon.atk;
+
+});
+
+enemy.hp -=
+totalAtk;
+
+log(
+"💥 "+
+totalAtk+
+" ダメージ！"
+);
+
+if(enemy.hp<=0){
+
+win(enemy);
+
+return;
+}
+
+hero.hp -=
+enemy.atk;
+
+log(
+enemy.name+
+" の攻撃！"
+);
+
+if(hero.hp<=0){
+
+hero.hp=
+hero.maxHp;
+
+log(
+"💫 倒れた！"
+);
+
+map();
+
+return;
+}
+
+update();
+};
+}
+
+function win(enemy){
+
+hero.gold += 20;
+
+log(
+"🎉 "+
+enemy.name+
+" を倒した！"
+);
+
+if(
+enemy.join &&
+!party.some(
+x=>x.name===enemy.join.name
+)
+){
+
+if(Math.random()<0.5){
+
+party.push(
+enemy.join
+);
+
+log(
+"🎊 "+
+enemy.join.name+
+" が仲間になった！"
+);
+}
+}
+
+if(hero.level<10){
+
+hero.level++;
+
+hero.maxHp+=10;
+
+hero.hp=
+hero.maxHp;
+
+log(
+"⭐ レベルアップ！"
+);
+}
+
+update();
+
+buttons.innerHTML=`
+
+<button onclick="map()">
+🗺️ マップへ
+</button>
+
+`;
+}
+
+function forest(){
+
+battle({
+
+name:"ウルファ",
+icon:"🐺",
+hp:40,
+atk:6,
+
+join:{
+name:"🐶ワンコロ",
+atk:10
+}
+
+});
+}
+
+function mountain(){
+
+battle({
+
+name:"ホークン",
+icon:"🦅",
+hp:60,
+atk:10,
+
+join:{
+name:"🦊フォクシー",
+atk:14
+}
+
+});
+}
+
+function shop(){
+
+scene.innerHTML="🏪";
+
+buttons.innerHTML=`
+
+<button onclick="buyPotion()">
+🧪 やくそう
+20G
+</button>
+
+<button onclick="map()">
+🗺️ 戻る
+</button>
+
+`;
+
+log(
+"🏪 お店へようこそ！"
+);
+}
+
+function buyPotion(){
+
+if(hero.gold<20){
+
+log(
+"💰 ゴールド不足"
+);
+
+return;
+}
+
+hero.gold-=20;
+
+hero.potions++;
+
+update();
+
+log(
+"🧪 やくそう購入"
+);
+}
+
+loadGame();
+map();
+
+</script>
+
+</body>
+</html>
