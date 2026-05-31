@@ -11,4 +11,10 @@ async function loadModules(){
   }
 }
 
-loadModules();
+loadModules().then(() => {
+  // initialize game after all modules loaded
+  window.initParty?.();
+  window.update?.();
+  window.map?.();
+  window.startStory?.();
+});
