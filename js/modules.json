@@ -3,6 +3,7 @@
   "./core/save.js",
   "./battle/battle.js",
   "./map/worldMap.js",
+  "./map/pharmacy.js",
   "./party/monsters.js",
   "./story/story.js",
   "./ui/ui.js"
