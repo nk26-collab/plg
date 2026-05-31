@@ -1,1 +1,29 @@
-<!DOCTYPE html><html lang='ja'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>しんじゅの伝説</title><style>body{font-family:sans-serif;background:#8fd3ff;text-align:center}button{width:260px;min-height:70px;font-size:22px;margin:6px}</style></head><body><h1>🌟しんじゅの伝説🌟</h1><div id='scene'>🗺️</div><div id='status'></div><div id='buttons'></div><div id='log'></div><script>let hero={hp:100,maxHp:100,gold:0,potions:3,level:1};function log(t){document.getElementById('log').innerHTML+=t+'<br>'}function update(){status.innerHTML='❤️'+hero.hp+' 💰'+hero.gold+' 🧪'+hero.potions}function map(){update();buttons.innerHTML='<button onclick=forest()>🌲森</button><button onclick=pharmacy()>💊薬屋</button><button onclick=shop()>🏪ショップ</button>'}function forest(){hero.gold+=20;log('🎉モンスターをたおした！ +20G');update()}function pharmacy(){scene.innerHTML='💊';buttons.innerHTML='<button onclick=buyPotion()>🧪やくそう 20G</button><button onclick=buySuper()>💊スーパーやくそう 50G</button><button onclick=map()>🗺️戻る</button>';log('💊薬屋へようこそ')}function buyPotion(){if(hero.gold>=20){hero.gold-=20;hero.potions++;update();log('🧪購入')}}function buySuper(){if(hero.gold>=50){hero.gold-=50;hero.hp=hero.maxHp;update();log('💊全回復！')}}function shop(){log('🏪ショップ')}map();</script></body></html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🌟しんじゅの伝説DX</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game">
+
+<h1>🌟しんじゅの伝説DX🌟</h1>
+
+<div id="scene">👧</div>
+
+<div id="status"></div>
+
+<div id="buttons"></div>
+
+<div id="log"></div>
+
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
