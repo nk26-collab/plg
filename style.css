@@ -1,1 +1,43 @@
-body{margin:0;background:#6ec6ff;font-family:sans-serif;text-align:center}#game{max-width:900px;margin:auto;background:#fff;min-height:100vh;padding:20px}#scene{font-size:96px}#status{background:#fff8c4;padding:10px;border-radius:10px}#log{height:300px;overflow:auto;border:1px solid #999;padding:10px;text-align:left}button{padding:10px;margin:4px}
+body{
+    margin:0;
+    font-family:sans-serif;
+    background:#8fd3ff;
+    text-align:center;
+}
+
+#game{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    min-height:100vh;
+    padding:15px;
+}
+
+#scene{
+    font-size:100px;
+}
+
+#status{
+    background:#fff8c4;
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+#log{
+    height:280px;
+    overflow-y:auto;
+    text-align:left;
+    border:2px solid #999;
+    background:#fafafa;
+    padding:10px;
+}
+
+button{
+    width:260px;
+    min-height:70px;
+    margin:6px;
+    font-size:22px;
+    border-radius:12px;
+    cursor:pointer;
+}
